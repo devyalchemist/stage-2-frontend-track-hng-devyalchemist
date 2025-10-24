@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { HiArrowLeft } from "react-icons/hi"; // 1. Import the icon
 import AppContainer from "../components/AppContainer";
 import { toast } from "react-toastify";
+import { useAuth } from "../contexts/AuthProvider";
 
 export default function SignupPage() {
 	const {
@@ -12,7 +13,21 @@ export default function SignupPage() {
 		watch,
 	} = useForm();
 	const navigate = useNavigate(); // 2. Get the navigate function
+	const { signup } = useAuth(); // 2. Get the signup function
 	const password = watch("password");
+
+	const onSubmit = (data) => {
+		try {
+			// 3. Just call the context signup function
+			signup(data);
+
+			toast.success("Account created successfully! Redirecting...");
+			navigate("/dashboard");
+		} catch (err) {
+			toast.error("Signup failed. Please try again.");
+			console.log(err);
+		}
+	};
 
 	// const onSubmit = (data) => {
 	// 	console.log("Signup data:", data);
@@ -20,52 +35,55 @@ export default function SignupPage() {
 	//     // createServerModuleRunner
 	// 	navigate("/dashboard");
 	// };
-	const onSubmit = async (data) => {
-		try {
-			// 1. Check if user already exists
-			const checkResponse = await fetch(
-				`http://localhost:3001/users?email=${data.email}`
-			);
-			const existingUsers = await checkResponse.json();
 
-			if (existingUsers.length > 0) {
-				throw new Error("An account with this email already exists.");
-			}
+	// secondary implemnataion ================
+	// const onSubmit = async (data) => {
+	// 	try {
+	// 		// 1. Check if user already exists
+	// 		const checkResponse = await fetch(
+	// 			`http://localhost:3001/users?email=${data.email}`
+	// 		);
+	// 		const existingUsers = await checkResponse.json();
 
-			// 2. Create the new user object
-			const newUser = {
-				name: data.email.split("@")[0], // Create a default name
-				email: data.email,
-				password: data.password, // In a real app, hash this!
-			};
+	// 		if (existingUsers.length > 0) {
+	// 			throw new Error("An account with this email already exists.");
+	// 		}
 
-			// 3. POST the new user to the /users endpoint
-			const createResponse = await fetch("http://localhost:3001/users", {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify(newUser),
-			});
+	// 		// 2. Create the new user object
+	// 		const newUser = {
+	// 			name: data.email.split("@")[0], // Create a default name
+	// 			email: data.email,
+	// 			password: data.password, // In a real app, hash this!
+	// 		};
 
-			if (!createResponse.ok) {
-				throw new Error("Failed to create account.");
-			}
+	// 		// 3. POST the new user to the /users endpoint
+	// 		const createResponse = await fetch("http://localhost:3001/users", {
+	// 			method: "POST",
+	// 			headers: {
+	// 				"Content-Type": "application/json",
+	// 			},
+	// 			body: JSON.stringify(newUser),
+	// 		});
 
-			const createdUser = await createResponse.json();
+	// 		if (!createResponse.ok) {
+	// 			throw new Error("Failed to create account.");
+	// 		}
 
-			// 4. Create mock token and store session (per spec)
-			const mockToken = `mock-token-${Date.now()}`;
-			localStorage.setItem("ticketapp_session", mockToken);
-			localStorage.setItem("ticketapp_user", JSON.stringify(createdUser));
+	// 		const createdUser = await createResponse.json();
 
-			toast.success("Account created successfully! Redirecting...");
-			navigate("/dashboard");
-		} catch (error) {
-			toast.error(error.message || "Signup failed. Please try again.");
-			console.error(error);
-		}
-	};
+	// 		// 4. Create mock token and store session (per spec)
+	// 		const mockToken = `mock-token-${Date.now()}`;
+	// 		localStorage.setItem("ticketapp_session", mockToken);
+	// 		localStorage.setItem("ticketapp_user", JSON.stringify(createdUser));
+
+	// 		toast.success("Account created successfully! Redirecting...");
+	// 		navigate("/dashboard");
+	// 	} catch (error) {
+	// 		toast.error(error.message || "Signup failed. Please try again.");
+	// 		console.error(error);
+	// 	}
+	// };
+	//tertiary implementation ===============
 	// const onSubmit = async (data) => {
 	// 	try {
 	// 		const response = await fetch("http://localhost:3001/login", {

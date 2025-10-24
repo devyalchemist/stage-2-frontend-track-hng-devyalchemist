@@ -74,7 +74,7 @@ export const AuthProvider = ({ children }) => {
 		const savedUser = getUserDatabase();
 		if (
 			savedUser.email === user.email &&
-			savedUser.password === savedUser.password
+			savedUser.password === user.password
 		) {
 			dispatch({
 				type: "LOGIN",

@@ -4,6 +4,7 @@ import {
 	HiOutlineFire,
 	HiOutlineSparkles,
 	HiOutlineCheckCircle,
+	HiPlus,
 } from "react-icons/hi";
 import { Link } from "react-router-dom";
 import { useAuth } from "../contexts/AuthProvider";
@@ -34,7 +35,7 @@ export default function Dashboard() {
 			{/* Page Header */}
 			<div className="flex justify-between items-center">
 				<div>
-					<h1 className="text-3xl font-bold text-green-950">
+					<h1 className="sm:text-3xl text-[1.2rem] font-bold text-green-950">
 						Welcome, {user?.name || "User"}!
 					</h1>
 					<p className="mt-1 text-gray-600">
@@ -44,7 +45,10 @@ export default function Dashboard() {
 				<Link
 					to="/tickets/new" // Assuming you'll have a route for creating new tickets
 					className="px-5 py-2 font-medium text-white bg-orange-500 rounded-lg shadow-md hover:bg-orange-600 transition-colors">
-					Create New Ticket
+					<span className="sm:inline hidden">Create New Ticket</span>
+					<span className="sm:hidden inline">
+						<HiPlus />
+					</span>
 				</Link>
 			</div>
 

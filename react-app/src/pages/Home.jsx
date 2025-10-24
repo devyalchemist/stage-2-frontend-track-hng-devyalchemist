@@ -7,7 +7,9 @@ export default function Home() {
 		<>
 			<AppContainer>
 				<header>
-					<p className="text-[1.5rem]">Chekaa</p>
+					<p className="text-[1.5rem] text-center font-bold	py-4 bg-amber-200">
+						Checkerr
+					</p>
 				</header>
 				{/* <Header /> */}
 				<Hero />

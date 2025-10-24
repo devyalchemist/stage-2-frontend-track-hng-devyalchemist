@@ -64,14 +64,9 @@ export default function LoginPage() {
 
 	const onSubmit = (data) => {
 		// 3. Mock the check
-		if (data.email === "user@example.com" && data.password === "password123") {
+		if (data.email && data.password) {
 			// 4. Call context login function
 			login(data);
-
-			toast.success("Login successful! Redirecting...");
-			navigate("/dashboard");
-		} else {
-			toast.error("Invalid email or password.");
 		}
 	};
 	return (

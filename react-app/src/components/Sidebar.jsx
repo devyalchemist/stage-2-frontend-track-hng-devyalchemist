@@ -1,9 +1,15 @@
 import { Link } from "react-router-dom";
 // Using icons from react-icons
-import { HiOutlineHome, HiOutlineTicket, HiOutlineUser } from "react-icons/hi";
+import {
+	HiMenu,
+	HiOutlineHome,
+	HiOutlineTicket,
+	HiOutlineUser,
+	HiX,
+} from "react-icons/hi";
 
 // Receives the state as a prop
-export default function Sidebar({ isSidebarOpen }) {
+export default function Sidebar({ onToggleSidebar, isSidebarOpen }) {
 	return (
 		// flex-shrink-0: Prevents the sidebar from shrinking
 		// transition-all: Smoothly animates the width change
@@ -16,12 +22,18 @@ shrink-0 bg-green-950 text-white flex flex-col
         ${isSidebarOpen ? "w-60" : "w-20"}
       `}>
 			{/* Logo Section */}
-			<div className="h-16 flex items-center justify-center border-b border-green-800 shrink-0">
+			<button
+				onClick={onToggleSidebar}
+				className="text-gray-600 hover:text-orange-500 focus:outline-none m-[1rem_auto] w-fit"
+				aria-label="Toggle sidebar ">
+				{/* Show 'X' icon when open, 'Menu' icon when closed */}
+				{isSidebarOpen ? <HiX size={28} /> : <HiMenu size={28} />}
+			</button>
+			{/* <div className="h-16 flex items-center justify-center border-b border-green-800 shrink-0">
 				<span className="text-2xl font-bold text-orange-500">
-					{/* Show full logo when open, 'C' when closed */}
 					{isSidebarOpen ? "Chekaa" : "C"}
 				</span>
-			</div>
+			</div> */}
 
 			{/* Navigation Links */}
 			<nav className="flex-1 overflow-y-auto p-4 space-y-2">
@@ -35,12 +47,6 @@ shrink-0 bg-green-950 text-white flex flex-col
 					icon={<HiOutlineTicket size={24} />}
 					text="Tickets"
 					to="/tickets"
-					isSidebarOpen={isSidebarOpen}
-				/>
-				<NavLink
-					icon={<HiOutlineUser size={24} />}
-					text="Profile"
-					to="/profile"
 					isSidebarOpen={isSidebarOpen}
 				/>
 			</nav>

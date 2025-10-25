@@ -42,12 +42,14 @@ shrink-0 bg-green-950 text-white flex flex-col
 					text="Dashboard"
 					to="/dashboard"
 					isSidebarOpen={isSidebarOpen}
+					onToggleSidebar={onToggleSidebar}
 				/>
 				<NavLink
 					icon={<HiOutlineTicket size={24} />}
 					text="Tickets"
 					to="/tickets"
 					isSidebarOpen={isSidebarOpen}
+					onToggleSidebar={onToggleSidebar}
 				/>
 			</nav>
 		</div>
@@ -55,10 +57,11 @@ shrink-0 bg-green-950 text-white flex flex-col
 }
 
 // A helper component to build the nav links
-function NavLink({ icon, text, to, isSidebarOpen }) {
+function NavLink({ icon, text, to, isSidebarOpen, onToggleSidebar }) {
 	return (
 		<Link
 			to={to}
+			onClick={isSidebarOpen && onToggleSidebar}
 			className={`
         flex items-center p-3 rounded-lg text-gray-300
         hover:bg-green-800 hover:text-white

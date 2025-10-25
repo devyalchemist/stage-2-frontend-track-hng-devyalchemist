@@ -4,11 +4,12 @@ import { useAuth } from "../contexts/AuthProvider";
 
 // Receives the toggle function and state as props
 export default function Header() {
-	const { logout, getUser } = useAuth();
-	const { user } = getUser();
+	const { logout, getUser, user } = useAuth();
+	// const { user } = getUser();
 
 	console.log(user);
 	const { name } = user;
+	console.log("Hey", name);
 	return (
 		// flex-shrink-0: Prevents header from shrinking
 		<header className="h-16 bg-white shadow-md flex items-center justify-between px-6 shrink-0">

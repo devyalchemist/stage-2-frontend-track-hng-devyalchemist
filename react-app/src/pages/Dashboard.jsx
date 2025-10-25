@@ -43,7 +43,7 @@ export default function Dashboard() {
 					</p>
 				</div>
 				<Link
-					to="/tickets/new" // Assuming you'll have a route for creating new tickets
+					to="/tickets" // Assuming you'll have a route for creating new tickets
 					className="px-5 py-2 font-medium text-white bg-orange-500 rounded-lg shadow-md hover:bg-orange-600 transition-colors">
 					<span className="sm:inline hidden">Create New Ticket</span>
 					<span className="sm:hidden inline">

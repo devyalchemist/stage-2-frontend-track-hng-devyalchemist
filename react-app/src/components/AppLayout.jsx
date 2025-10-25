@@ -40,7 +40,12 @@ export default function AppLayout() {
 					{/* overflow-auto: makes ONLY this area scrollable if content is long */}
 					{/* p-6: adds padding around your page content */}
 					<main className="flex-1 overflow-auto p-6 md:p-8">
-						<Outlet />
+						<div className="block sm:hidden">
+							{!isSidebarOpen && <Outlet />}
+						</div>
+						<div className="sm:block hidden">
+							<Outlet />
+						</div>
 					</main>
 				</div>
 			</div>

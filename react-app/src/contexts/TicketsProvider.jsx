@@ -18,7 +18,7 @@ function getTickets() {
 	return tickets;
 }
 function saveTickets(data) {
-	localStorage.setItem(DB_KEY, data);
+	localStorage.setItem(DB_KEY, JSON.stringify(data));
 }
 
 const ticketsReducer = (state, action) => {
@@ -132,6 +132,7 @@ export const TicketsProvider = ({ children }) => {
 		<TicketsContext.Provider
 			value={{
 				...state,
+				getTickets,
 				createTicket,
 				updateTicket,
 				deleteTicket,

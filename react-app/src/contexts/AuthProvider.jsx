@@ -8,7 +8,7 @@ import { toast } from "react-toastify";
 
 const initialState = {
 	isAuthenticated: false,
-	user: null,
+	user: {},
 };
 
 const authReducer = (state, action) => {

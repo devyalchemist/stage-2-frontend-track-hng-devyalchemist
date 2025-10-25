@@ -12,10 +12,7 @@ import { useTickets } from "../contexts/TicketsProvider";
 
 export default function Dashboard() {
 	const { tickets, isLoading } = useTickets();
-	const { user } = useAuth(); // Assuming you'll grab the user to say hello
-
-	// 1. Calculate Statistics
-	// useMemo prevents recalculating this on every render
+	const { user } = useAuth();
 	const stats = useMemo(() => {
 		const total = tickets?.length;
 		const open = tickets?.filter((t) => t.status === "open").length;
@@ -32,7 +29,6 @@ export default function Dashboard() {
 
 	return (
 		<div className="space-y-8">
-			{/* Page Header */}
 			<div className="flex justify-between items-center">
 				<div>
 					<h1 className="sm:text-3xl text-[1.2rem] font-bold text-green-950">
@@ -43,7 +39,7 @@ export default function Dashboard() {
 					</p>
 				</div>
 				<Link
-					to="/tickets" // Assuming you'll have a route for creating new tickets
+					to="/tickets"
 					className="px-5 py-2 font-medium text-white bg-orange-500 rounded-lg shadow-md hover:bg-orange-600 transition-colors">
 					<span className="sm:inline hidden">Create New Ticket</span>
 					<span className="sm:hidden inline">
@@ -52,10 +48,7 @@ export default function Dashboard() {
 				</Link>
 			</div>
 
-			{/* 2. Alternative 1: Stat Cards (Recommended) */}
-			{/* This is the cleanest way without libraries. */}
 			<div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
-				{/* Total Tickets Card */}
 				<StatCard
 					title="Total Tickets"
 					value={stats.total}
@@ -63,7 +56,6 @@ export default function Dashboard() {
 					color="blue"
 				/>
 
-				{/* Open Tickets Card (Green) */}
 				<StatCard
 					title="Open Tickets"
 					value={stats.open}
@@ -71,7 +63,6 @@ export default function Dashboard() {
 					color="green"
 				/>
 
-				{/* In Progress Tickets Card (Amber/Orange) */}
 				<StatCard
 					title="In Progress"
 					value={stats.inProgress}
@@ -79,7 +70,6 @@ export default function Dashboard() {
 					color="yellow"
 				/>
 
-				{/* Closed Tickets Card (Gray) */}
 				<StatCard
 					title="Tickets Closed"
 					value={stats.closed}
@@ -88,7 +78,6 @@ export default function Dashboard() {
 				/>
 			</div>
 
-			{/* 3. Alternative 2: Simple Bar Chart (CSS-only) */}
 			<div className="p-6 bg-white rounded-lg shadow">
 				<h2 className="text-xl font-semibold text-green-950 mb-4">
 					Status Breakdown
@@ -118,11 +107,7 @@ export default function Dashboard() {
 	);
 }
 
-// --- Helper Components ---
-
-// Reusable component for the Stat Cards
 function StatCard({ title, value, icon, color }) {
-	// Define border colors based on prop
 	const colorClasses = {
 		blue: "border-blue-500",
 		green: "border-green-500",
@@ -148,9 +133,7 @@ function StatCard({ title, value, icon, color }) {
 	);
 }
 
-// Reusable component for the CSS bar chart
 function Bar({ value, total, label, color }) {
-	// Calculate height percentage. Default to 0 if total is 0.
 	const height = total > 0 ? (value / total) * 100 : 0;
 
 	return (

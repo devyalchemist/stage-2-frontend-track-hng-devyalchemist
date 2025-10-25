@@ -2,7 +2,6 @@ import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { HiArrowLeft } from "react-icons/hi"; // 1. Import the icon
 import AppContainer from "../components/AppContainer";
-import { toast } from "react-toastify";
 import { useAuth } from "../contexts/AuthProvider";
 
 export default function LoginPage() {
@@ -11,76 +10,23 @@ export default function LoginPage() {
 		handleSubmit,
 		formState: { errors },
 	} = useForm();
-	const navigate = useNavigate(); // 2. Get the navigate function
-
-	// const onSubmit = (data) => {
-	// 	console.log("Login data:", data);
-
-	// 	if (data.email === "user@example.com" && data.password === "password123") {
-	// 		localStorage.setItem("ticketapp_session", `mock-token-${Date.now()}`);
-	// 		navigate("/dashboard");
-	// 	} else {
-	// 		console.error("Invalid credentials");
-	// 		// TODO: Add toast notification
-	// 	}
-	// };
-
-	// In LoginPage's onSubmit ========================
-	// const onSubmit = async (data) => {
-	// 	try {
-	// 		// 1. Fetch ALL users from your db.json
-	// 		const response = await fetch(
-	// 			`http://localhost:3001/users?email=${data.email}`
-	// 		);
-	// 		const users = await response.json();
-
-	// 		// 2. Check if a user with that email exists
-	// 		if (users.length === 0) {
-	// 			throw new Error("User not found");
-	// 		}
-
-	// 		const user = users[0];
-
-	// 		// 3. Manually check the password
-	// 		if (user.password === data.password) {
-	// 			// 4. Create mock token and store session (per spec)
-	// 			const mockToken = `mock-token-${Date.now()}`;
-	// 			localStorage.setItem("ticketapp_session", mockToken);
-	// 			localStorage.setItem("ticketapp_user", JSON.stringify(user));
-
-	// 			toast.success("Login successful! Redirecting...");
-	// 			navigate("/dashboard");
-	// 		} else {
-	// 			throw new Error("Invalid password");
-	// 		}
-	// 	} catch (error) {
-	// 		toast.error(error.message || "Invalid email or password.");
-	// 		console.error(error);
-	// 	}
-	// };
-
-	//last resolution for local
-	const { login } = useAuth(); // 2. Get the login function
+	const navigate = useNavigate();
+	const { login } = useAuth();
 
 	const onSubmit = (data) => {
-		// 3. Mock the check
 		if (data.email && data.password) {
-			// 4. Call context login function
 			login(data);
 		}
 	};
 	return (
-		// 3. Add 'relative' to the container
 		<AppContainer>
 			<div className="flex w-full items-center justify-center min-h-screen bg-gray-100 relative">
-				{/* 4. Add the Back Button */}
 				<button
-					onClick={() => navigate(-1)} // Goes back one page in history
+					onClick={() => navigate(-1)}
 					className="absolute top-6 left-6 md:top-8 md:left-8 text-gray-500 hover:text-orange-600 transition-colors"
 					aria-label="Go back">
 					<HiArrowLeft size={28} />
 				</button>
-				{/* Auth Card */}
 				<div className="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-lg">
 					<div className="text-center">
 						<h1 className="text-3xl font-bold text-green-950">
@@ -91,7 +37,6 @@ export default function LoginPage() {
 						</p>
 					</div>
 					<form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-						{/* Email Field */}
 						<div>
 							<label
 								htmlFor="email"
@@ -122,7 +67,7 @@ export default function LoginPage() {
 								</p>
 							)}
 						</div>
-						{/* Password Field */}
+						\{" "}
 						<div>
 							<label
 								htmlFor="password"

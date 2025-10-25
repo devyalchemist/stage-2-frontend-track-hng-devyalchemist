@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
-import { HiArrowLeft } from "react-icons/hi"; // 1. Import the icon
+import { HiArrowLeft } from "react-icons/hi";
 import AppContainer from "../components/AppContainer";
 import { toast } from "react-toastify";
 import { useAuth } from "../contexts/AuthProvider";
@@ -12,13 +12,12 @@ export default function SignupPage() {
 		formState: { errors },
 		watch,
 	} = useForm();
-	const navigate = useNavigate(); // 2. Get the navigate function
-	const { signup } = useAuth(); // 2. Get the signup function
+	const navigate = useNavigate();
+	const { signup } = useAuth();
 	const password = watch("password");
 
 	const onSubmit = (data) => {
 		try {
-			// 3. Just call the context signup function
 			signup(data);
 
 			toast.success("Account created successfully! Redirecting...");
@@ -29,107 +28,16 @@ export default function SignupPage() {
 		}
 	};
 
-	// const onSubmit = (data) => {
-	// 	console.log("Signup data:", data);
-	// 	localStorage.setItem("ticketapp_session", `mock-token-${Date.now()}`);
-	//     // createServerModuleRunner
-	// 	navigate("/dashboard");
-	// };
-
-	// secondary implemnataion ================
-	// const onSubmit = async (data) => {
-	// 	try {
-	// 		// 1. Check if user already exists
-	// 		const checkResponse = await fetch(
-	// 			`http://localhost:3001/users?email=${data.email}`
-	// 		);
-	// 		const existingUsers = await checkResponse.json();
-
-	// 		if (existingUsers.length > 0) {
-	// 			throw new Error("An account with this email already exists.");
-	// 		}
-
-	// 		// 2. Create the new user object
-	// 		const newUser = {
-	// 			name: data.email.split("@")[0], // Create a default name
-	// 			email: data.email,
-	// 			password: data.password, // In a real app, hash this!
-	// 		};
-
-	// 		// 3. POST the new user to the /users endpoint
-	// 		const createResponse = await fetch("http://localhost:3001/users", {
-	// 			method: "POST",
-	// 			headers: {
-	// 				"Content-Type": "application/json",
-	// 			},
-	// 			body: JSON.stringify(newUser),
-	// 		});
-
-	// 		if (!createResponse.ok) {
-	// 			throw new Error("Failed to create account.");
-	// 		}
-
-	// 		const createdUser = await createResponse.json();
-
-	// 		// 4. Create mock token and store session (per spec)
-	// 		const mockToken = `mock-token-${Date.now()}`;
-	// 		localStorage.setItem("ticketapp_session", mockToken);
-	// 		localStorage.setItem("ticketapp_user", JSON.stringify(createdUser));
-
-	// 		toast.success("Account created successfully! Redirecting...");
-	// 		navigate("/dashboard");
-	// 	} catch (error) {
-	// 		toast.error(error.message || "Signup failed. Please try again.");
-	// 		console.error(error);
-	// 	}
-	// };
-	//tertiary implementation ===============
-	// const onSubmit = async (data) => {
-	// 	try {
-	// 		const response = await fetch("http://localhost:3001/login", {
-	// 			method: "POST",
-	// 			headers: { "Content-Type": "application/json" },
-	// 			body: JSON.stringify(data),
-	// 		});
-
-	// 		const result = await response.json();
-
-	// 		if (!response.ok) {
-	// 			throw new Error(result);
-	// 		}
-
-	// 		// Auth was successful! json-server-auth sends back a token and user
-	// 		// { "accessToken": "...", "user": { ... } }
-
-	// 		// 1. Store the token in localStorage (as required by the spec)
-	// 		localStorage.setItem("ticketapp_session", result.accessToken);
-
-	// 		// 2. Store the user object (your original idea)
-	// 		localStorage.setItem("ticketapp_user", JSON.stringify(result.user));
-
-	// 		// 3. Update your AuthContext
-	// 		// login(result.user); // (If you're using Context)
-
-	// 		toast.success("Login successful!");
-	// 		navigate("/dashboard");
-	// 	} catch (error) {
-	// 		toast.error("Invalid email or password.");
-	// 		console.error(error);
-	// 	}
-	// };
-
 	return (
-		// 3. Add 'relative' to the container
 		<AppContainer>
 			<div className="flex items-center justify-center min-h-screen bg-gray-100 relative">
-				{/* 4. Add the Back Button */}
 				<button
-					onClick={() => navigate(-1)} // Goes back one page in history
+					onClick={() => navigate(-1)}
 					className="absolute top-6 left-6 md:top-8 md:left-8 text-gray-500 hover:text-orange-600 transition-colors"
 					aria-label="Go back">
 					<HiArrowLeft size={28} />
 				</button>
-				{/* Auth Card */}
+				\{" "}
 				<div className="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-lg">
 					<div className="text-center">
 						<h1 className="text-3xl font-bold text-green-950">
@@ -140,7 +48,6 @@ export default function SignupPage() {
 						</p>
 					</div>
 					<form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-						{/* Email Field */}
 						<div>
 							<label
 								htmlFor="email"
@@ -202,7 +109,6 @@ export default function SignupPage() {
 								</p>
 							)}
 						</div>
-						{/* Confirm Password Field */}
 						<div>
 							<label
 								htmlFor="confirmPassword"

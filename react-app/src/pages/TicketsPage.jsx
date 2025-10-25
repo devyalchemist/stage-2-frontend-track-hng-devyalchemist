@@ -6,13 +6,13 @@ import TicketCard from "../features/ticketing/TicketCard";
 import { toast } from "react-toastify";
 
 export default function TicketsPage() {
-	const { tickets, deleteTicket, getTickets } = useTickets();
+	const { tickets, deleteTicket } = useTickets();
 	const [isFormVisible, setIsFormVisible] = useState(false);
 	const [editingTicket, setEditingTicket] = useState(null);
 
 	const handleEdit = (ticket) => {
-		setEditingTicket(ticket); // Set the ticket
-		setIsFormVisible(true); // Show the form
+		setEditingTicket(ticket);
+		setIsFormVisible(true);
 	};
 	const handleDelete = (ticketId) => {
 		if (window.confirm("Are you sure you want to delete this ticket?")) {
@@ -26,19 +26,16 @@ export default function TicketsPage() {
 	};
 
 	const showCreateForm = () => {
-		setEditingTicket(null); // Make sure we're not editing
+		setEditingTicket(null);
 		setIsFormVisible(true);
 	};
 
-	// 5. Logic to close the form
 	const closeForm = () => {
 		setIsFormVisible(false);
-		setEditingTicket(null); // Clear editing state
+		setEditingTicket(null);
 	};
-	// const tickets = getTickets();
 	return (
 		<div className="space-y-6">
-			{/* 3. Page Header with Toggle Button */}
 			<div className="flex justify-between items-center">
 				<h1 className="text-3xl font-bold text-green-950">Manage Tickets</h1>
 				<button
@@ -66,8 +63,6 @@ export default function TicketsPage() {
 				</button>
 			</div>
 
-			{/* 4. Conditionally render the form */}
-			{/* This unmounts the component when hidden, resetting its state */}
 			{isFormVisible && (
 				<CreateTicketForm
 					editingTicket={editingTicket}
@@ -75,7 +70,6 @@ export default function TicketsPage() {
 				/>
 			)}
 
-			{/* 5. Ticket List */}
 			<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 				{tickets.length > 0
 					? tickets.map((ticket) => (
@@ -86,8 +80,7 @@ export default function TicketsPage() {
 								onDelete={handleDelete}
 							/>
 					  ))
-					: // Show this if the form is hidden and no tickets exist
-					  !isFormVisible && (
+					: !isFormVisible && (
 							<div className="col-span-3 p-10 text-center bg-white rounded-lg shadow-md">
 								<p className="text-gray-500">
 									You have no tickets. Click "Create Ticket" to add one!

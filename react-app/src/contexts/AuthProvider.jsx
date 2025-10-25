@@ -1,10 +1,6 @@
-// src/contexts/AuthContext.jsx
-
 import { createContext, useContext, useEffect, useReducer } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-
-// --- 1. Define Initial State & Reducer ---
 
 const initialState = {
 	isAuthenticated: false,
@@ -30,13 +26,11 @@ const authReducer = (state, action) => {
 	}
 };
 
-// --- 2. Create The Context ---
 const AuthContext = createContext();
 const getUserDatabase = () => {
 	const db = localStorage.getItem("ticketapp_user");
 	return db ? JSON.parse(db) : [];
 };
-// --- 3. Create The Provider Component ---
 export const AuthProvider = ({ children }) => {
 	const [{ isAuthenticated, user }, dispatch] = useReducer(
 		authReducer,
@@ -44,7 +38,6 @@ export const AuthProvider = ({ children }) => {
 	);
 	const navigate = useNavigate();
 
-	// 4. Check localStorage on app load
 	useEffect(() => {
 		const token = localStorage.getItem("ticketapp_session");
 		const user = localStorage.getItem("ticketapp_user");
@@ -55,16 +48,13 @@ export const AuthProvider = ({ children }) => {
 				type: "LOGIN",
 				payload: JSON.parse(user),
 			});
-			// navigate("/dashboard");
 		}
 	}, []);
 
-	// 5. Define public functions
 	const login = (userData) => {
-		// This is the mock login logic
 		const mockToken = `mock-token-${Date.now()}`;
 		const user = {
-			id: userData.email, // Use email as ID for this mock
+			id: userData.email,
 			email: userData.email,
 			name: userData.email.split("@")[0],
 			password: userData.password,
@@ -99,13 +89,10 @@ export const AuthProvider = ({ children }) => {
 		};
 		console.log(value);
 		return value;
-
-		// return { isAuthenticated: JSON.parse(user)?.isAuthenticated || false };
 	};
 	const signup = (userData) => {
-		// Signup logic is the same as login for this mock
 		const user = {
-			id: userData.email, // Use email as ID for this mock
+			id: userData.email,
 			email: userData.email,
 			name: userData.email.split("@")[0],
 			password: userData.password,
@@ -141,7 +128,6 @@ export const AuthProvider = ({ children }) => {
 	);
 };
 
-// --- 6. Create The Custom Hook ---
 export const useAuth = () => {
 	const context = useContext(AuthContext);
 	if (context === undefined) {

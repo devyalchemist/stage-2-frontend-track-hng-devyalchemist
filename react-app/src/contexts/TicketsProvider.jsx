@@ -1,12 +1,7 @@
-// src/contexts/TicketsContext.jsx
-
 import { createContext, useContext, useReducer, useEffect } from "react";
 import { useAuth } from "./AuthProvider";
 
-// --- LocalStorage Helper Functions ---
 const DB_KEY = "ticketapp_tickets";
-// ... (getInitialMockData, getTicketsDatabase, saveTicketsDatabase helpers are here) ...
-// ... (See previous answer for these helper functions) ...
 
 const initialState = {
 	tickets: [],
@@ -23,17 +18,16 @@ function saveTickets(data) {
 
 const ticketsReducer = (state, action) => {
 	switch (action.type) {
-		// This is the action that sets the state from localStorage
 		case "SET_TICKETS":
 			return {
 				...state,
 				tickets: action.payload,
 				isLoading: false,
 			};
-		// All other CRUD actions update the state *and* localStorage
+
 		case "CREATE_TICKET":
 			const newTickets_create = [action.payload, ...state.tickets];
-			saveTickets(newTickets_create); // Sync with localStorage
+			saveTickets(newTickets_create);
 			return {
 				...state,
 				tickets: newTickets_create,
@@ -42,7 +36,7 @@ const ticketsReducer = (state, action) => {
 			const newTickets_update = state.tickets.map((t) =>
 				t.id === action.payload.id ? action.payload : t
 			);
-			saveTickets(newTickets_update); // Sync with localStorage
+			saveTickets(newTickets_update);
 			return {
 				...state,
 				tickets: newTickets_update,
@@ -51,7 +45,7 @@ const ticketsReducer = (state, action) => {
 			const newTickets_delete = state.tickets.filter(
 				(t) => t.id !== action.payload
 			);
-			saveTickets(newTickets_delete); // Sync with localStorage
+			saveTickets(newTickets_delete);
 			return {
 				...state,
 				tickets: newTickets_delete,
@@ -67,32 +61,20 @@ export const TicketsProvider = ({ children }) => {
 	const [state, dispatch] = useReducer(ticketsReducer, initialState);
 	const { user, isAuthenticated } = useAuth();
 
-	// THIS IS THE LOGIC YOU WANTED:
-	// "load from localStorage and set as initial state"
 	useEffect(() => {
 		if (isAuthenticated && user) {
-			// 1. Fetch from localStorage
 			const allTickets = getTickets();
 			const userTickets = allTickets
 				?.filter((t) => t.userId === user.id)
 				.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
-			// 2. Set as the initial state for the context
 			dispatch({ type: "SET_TICKETS", payload: userTickets });
 		} else {
-			// If user logs out, clear the tickets
 			dispatch({ type: "SET_TICKETS", payload: [] });
 		}
 	}, [isAuthenticated, user]);
 
-	// --- Public CRUD functions ---
-	// These functions now *only* need to dispatch.
-	// The reducer handles the state update AND the localStorage sync.
-
 	const createTicket = (ticketData) => {
-		// const error = validateTicket(ticketData);
-		// if (error) return { success: false, error };
-
 		const newTicket = {
 			...ticketData,
 			id: `t-${Date.now()}`,
@@ -105,9 +87,6 @@ export const TicketsProvider = ({ children }) => {
 	};
 
 	const updateTicket = (ticketId, updatedData) => {
-		// const error = validateTicket(updatedData);
-		// if (error) return { success: false, error };
-
 		const ticketToUpdate = state.tickets.find((t) => t.id === ticketId);
 		if (!ticketToUpdate || ticketToUpdate.userId !== user.id) {
 			return { success: false, error: "Ticket not found" };

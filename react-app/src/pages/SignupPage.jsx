@@ -41,7 +41,7 @@ export default function SignupPage() {
 				<div className="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-lg">
 					<div className="text-center">
 						<h1 className="text-3xl font-bold text-green-950">
-							Create your Chekaa Account
+							Create your Checkerr Account
 						</h1>
 						<p className="mt-2 text-gray-600">
 							Get started in just a few steps.

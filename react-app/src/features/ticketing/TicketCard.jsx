@@ -67,7 +67,7 @@ export default function TicketCard({ ticket, onEdit, onDelete }) {
         flex flex-col
       `}>
 			{/* --- Main Card Content --- */}
-			<div className="p-5 flex-grow">
+			<div className="p-5 grow">
 				{/* Card Header: Title and Status Tag */}
 				<div className="flex justify-between items-start mb-2">
 					<h3 className="text-xl font-bold text-green-950 pr-2">{title}</h3>
@@ -75,7 +75,7 @@ export default function TicketCard({ ticket, onEdit, onDelete }) {
 					<span
 						className={`
               px-3 py-1 rounded-full text-xs font-semibold
-              uppercase flex-shrink-0 ${currentStatusStyles.tag}
+              uppercase shrink-0 ${currentStatusStyles.tag}
             `}>
 						{status.replace("_", " ")}
 					</span>

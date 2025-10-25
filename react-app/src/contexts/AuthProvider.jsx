@@ -70,12 +70,13 @@ export const AuthProvider = ({ children }) => {
 			password: userData.password,
 		};
 
-		localStorage.setItem("ticketapp_session", mockToken);
 		const savedUser = getUserDatabase();
 		if (
 			savedUser.email === user.email &&
 			savedUser.password === user.password
 		) {
+			localStorage.setItem("ticketapp_session", mockToken);
+
 			dispatch({
 				type: "LOGIN",
 				payload: user,

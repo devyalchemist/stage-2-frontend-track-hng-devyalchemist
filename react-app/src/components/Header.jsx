@@ -4,7 +4,7 @@ import { useAuth } from "../contexts/AuthProvider";
 
 // Receives the toggle function and state as props
 export default function Header() {
-	const { logout, getUser, user } = useAuth();
+	const { logout, user } = useAuth();
 	// const { user } = getUser();
 
 	console.log(user);

@@ -37,7 +37,7 @@ export default function SignupPage() {
 					aria-label="Go back">
 					<HiArrowLeft size={28} />
 				</button>
-				\{" "}
+
 				<div className="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-lg">
 					<div className="text-center">
 						<h1 className="text-3xl font-bold text-green-950">

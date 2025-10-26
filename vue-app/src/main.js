@@ -13,10 +13,35 @@ import {
 	HiX,
 	HiLogout,
 	HiArrowLeft,
+	HiFire,
+	HiSparkles,
+	HiCheckCircle,
+	HiPlus,
+	HiMinus,
+	HiPencil,
+	HiTrash,
+	HiExclamationCircle,
+	HiCalendar,
 } from "oh-vue-icons/icons/hi";
 
 // --- 2. Add the icons to the library ---
-addIcons(HiMenu, HiX, HiHome, HiTicket, HiLogout, HiArrowLeft);
+addIcons(
+	HiMenu,
+	HiX,
+	HiHome,
+	HiFire,
+	HiSparkles,
+	HiCheckCircle,
+	HiPlus,
+	HiTicket,
+	HiPencil,
+	HiTrash,
+	HiExclamationCircle,
+	HiCalendar,
+	HiLogout,
+	HiMinus,
+	HiArrowLeft
+);
 
 import App from "./App.vue";
 import "./assets/main.css";

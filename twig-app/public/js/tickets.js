@@ -1,39 +1,32 @@
-// // public/js/tickets.js
 const DB_KEY = "ticketapp_tickets";
 
 document.addEventListener("DOMContentLoaded", () => {
 	console.log("Tickets JS Loaded");
 
-	// --- Get DOM Elements ---
 	const toggleButton = document.getElementById("toggle-form-button");
 	const formContainer = document.getElementById("ticket-form-container");
 	const ticketListContainer = document.getElementById("ticket-list");
 	const toggleIcon = document.getElementById("toggle-form-icon");
 	const toggleText = document.getElementById("toggle-form-text");
 
-	// --- State Variables ---
 	let isFormVisible = false;
 	let editingTicket = null;
 
-	// --- Load User ---
 	const userString = localStorage.getItem("ticketapp_user");
 	let user = null;
-	// ... (Keep the user loading and error handling logic from the previous correct version) ...
 	if (userString) {
 		try {
 			user = JSON.parse(userString);
 		} catch (e) {
-			/* ... error handling ... */ return;
+			return;
 		}
 	}
 	if (!user) {
-		/* ... error handling ... */ return;
+		return;
 	}
 
-	// --- LocalStorage Helper Functions (Defined FIRST within this scope) ---
 	function getTickets() {
 		const dbString = localStorage.getItem(DB_KEY);
-		// console.log(`Reading ${DB_KEY}:`, dbString); // Keep for debugging if needed
 		if (!dbString) {
 			return null;
 		}
@@ -55,17 +48,14 @@ document.addEventListener("DOMContentLoaded", () => {
 			return;
 		}
 		try {
-			// console.log(`Saving to ${DB_KEY}:`, data); // Keep for debugging if needed
 			localStorage.setItem(DB_KEY, JSON.stringify(data));
 		} catch (e) {
 			console.error(`Error saving ${DB_KEY}:`, e);
 		}
 	}
-	// --- End Helpers ---
 
-	// --- Load and Render Tickets Function ---
 	function loadAndRenderTickets() {
-		const allTickets = getTickets(); // Uses helper
+		const allTickets = getTickets();
 		const userTickets = (allTickets || [])
 			.filter((t) => t && t.userId === user.id)
 			.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
@@ -93,9 +83,7 @@ document.addEventListener("DOMContentLoaded", () => {
 		}
 	}
 
-	// --- Form Toggle Logic ---
 	if (toggleButton) {
-		/* ... Same as before ... */
 		toggleButton.addEventListener("click", () => {
 			isFormVisible = !isFormVisible;
 			if (isFormVisible) {
@@ -116,7 +104,6 @@ document.addEventListener("DOMContentLoaded", () => {
 	}
 
 	function closeForm() {
-		/* ... Same as before ... */
 		isFormVisible = false;
 		editingTicket = null;
 		if (formContainer) {
@@ -135,9 +122,7 @@ document.addEventListener("DOMContentLoaded", () => {
 		loadAndRenderTickets();
 	}
 
-	// --- Render Form Function ---
 	function renderForm() {
-		/* ... Same as before ... */
 		if (!formContainer) return;
 		formContainer.innerHTML = createTicketFormHTML(editingTicket);
 		const ticketForm = document.getElementById("ticket-form");
@@ -150,9 +135,7 @@ document.addEventListener("DOMContentLoaded", () => {
 		}
 	}
 
-	// --- Form Submit Handler ---
 	function handleFormSubmit(event) {
-		/* ... Same as before ... */
 		event.preventDefault();
 		const form = event.target;
 		const formData = new FormData(form);
@@ -185,7 +168,6 @@ document.addEventListener("DOMContentLoaded", () => {
 		}
 	}
 
-	// --- CRUD Functions for localStorage (Uses helpers defined above) ---
 	function createTicketInStorage(ticketData) {
 		console.log("--- createTicketInStorage START ---", ticketData);
 		try {
@@ -204,7 +186,7 @@ document.addEventListener("DOMContentLoaded", () => {
 			};
 			console.log("Created newTicket object:", newTicket);
 
-			const currentTickets = getTickets() || []; // Use helper, default to []
+			const currentTickets = getTickets() || [];
 			console.log("Parsed currentTickets:", currentTickets);
 
 			const newStateTickets = [newTicket, ...currentTickets];
@@ -213,7 +195,7 @@ document.addEventListener("DOMContentLoaded", () => {
 				newStateTickets.length
 			);
 
-			saveTickets(newStateTickets); // *** Use helper ***
+			saveTickets(newStateTickets);
 			console.log("--- createTicketInStorage SUCCESS ---");
 
 			return { success: true, data: newTicket };
@@ -227,7 +209,7 @@ document.addEventListener("DOMContentLoaded", () => {
 	function updateTicketInStorage(ticketId, updatedData) {
 		try {
 			let ticketUpdated = false;
-			const currentTickets = getTickets() || []; // Use helper
+			const currentTickets = getTickets() || [];
 			if (!Array.isArray(currentTickets))
 				throw new Error("Stored tickets not an array");
 
@@ -248,7 +230,7 @@ document.addEventListener("DOMContentLoaded", () => {
 			if (!ticketUpdated)
 				return { success: false, error: "Ticket not found or unauthorized" };
 
-			saveTickets(updatedAllTickets); // *** Use helper ***
+			saveTickets(updatedAllTickets);
 			return { success: true };
 		} catch (e) {
 			console.error("Error in updateTicketInStorage:", e);
@@ -258,7 +240,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 	function deleteTicketInStorage(ticketId) {
 		try {
-			const currentTickets = getTickets() || []; // Use helper
+			const currentTickets = getTickets() || [];
 			if (!Array.isArray(currentTickets))
 				throw new Error("Stored tickets not an array");
 
@@ -271,7 +253,7 @@ document.addEventListener("DOMContentLoaded", () => {
 				return { success: false, error: "Ticket not found or unauthorized" };
 			}
 
-			saveTickets(updatedAllTickets); // *** Use helper ***
+			saveTickets(updatedAllTickets);
 			return { success: true };
 		} catch (e) {
 			console.error("Error in deleteTicketInStorage:", e);
@@ -279,11 +261,9 @@ document.addEventListener("DOMContentLoaded", () => {
 		}
 	}
 
-	// --- Event Listeners for Edit/Delete on Cards ---
 	function handleEditClick(ticketId) {
-		/* ... Same as before ... */
 		try {
-			const allTickets = getTickets() || []; // Use helper
+			const allTickets = getTickets() || [];
 			if (!Array.isArray(allTickets))
 				throw new Error("Stored tickets not an array");
 			const ticket = allTickets.find(
@@ -313,7 +293,6 @@ document.addEventListener("DOMContentLoaded", () => {
 		}
 	}
 	function handleDeleteClick(ticketId) {
-		/* ... Same as before ... */
 		if (window.confirm("Are you sure?")) {
 			const result = deleteTicketInStorage(ticketId);
 			if (result.success) {
@@ -325,13 +304,11 @@ document.addEventListener("DOMContentLoaded", () => {
 		}
 	}
 	function attachCardEventListeners() {
-		/* ... Same as before ... */
 		if (!ticketListContainer) return;
 		ticketListContainer.removeEventListener("click", handleCardButtonClick);
 		ticketListContainer.addEventListener("click", handleCardButtonClick);
 	}
 	function handleCardButtonClick(event) {
-		/* ... Same as before ... */
 		const button = event.target.closest("button");
 		if (!button) return;
 		const ticketId = button.dataset.ticketId;
@@ -343,12 +320,9 @@ document.addEventListener("DOMContentLoaded", () => {
 		}
 	}
 
-	// --- Initial Load ---
 	loadAndRenderTickets();
 
-	// --- Helper to create Form HTML (WITH PADDING) ---
 	function createTicketFormHTML(ticket = null) {
-		/* ... Same as before ... */
 		const isEdit = !!ticket;
 		return `
 			<form id="ticket-form" class="space-y-4 bg-white p-6 rounded-lg shadow-md mb-6">
@@ -467,102 +441,7 @@ document.addEventListener("DOMContentLoaded", () => {
 		}" class="delete-button p-2 text-gray-500 rounded-full hover:bg-gray-200 hover:text-red-600 transition-colors" aria-label="Delete ticket">${deleteIcon}</button></div></div>
 			 </div>`;
 	}
-	// function createTicketCardHTML(ticket) {
-	// 	const statusStylesMap = {
-	// 		open: { tag: "bg-green-100 text-green-800", border: "border-green-500" },
-	// 		in_progress: {
-	// 			tag: "bg-yellow-100 text-yellow-800",
-	// 			border: "border-yellow-500",
-	// 		},
-	// 		closed: { tag: "bg-gray-100 text-gray-800", border: "border-gray-500" },
-	// 	};
-	// 	const priorityStylesMap = {
-	// 		high: "bg-red-100 text-red-800",
-	// 		medium: "bg-blue-100 text-blue-800",
-	// 		low: "bg-gray-100 text-gray-800",
-	// 	};
 
-	// 	const currentStatusStyles =
-	// 		statusStylesMap[ticket?.status] || statusStylesMap.closed;
-	// 	const currentPriorityStyles =
-	// 		priorityStylesMap[ticket?.priority] || priorityStylesMap.low;
-
-	// 	let formattedDate = "Invalid Date";
-	// 	try {
-	// 		formattedDate = new Date(ticket.createdAt).toLocaleDateString("en-US", {
-	// 			year: "numeric",
-	// 			month: "short",
-	// 			day: "numeric",
-	// 		});
-	// 	} catch (e) {}
-
-	// 	// Unicode symbols to mimic React icons
-	// 	const exclamationIcon = "&#9888;"; // ⚠️
-	// 	const calendarIcon = "&#128197;"; // 📅
-	// 	const pencilIcon = "&#9998;"; // ✏️
-	// 	const trashIcon = "&#128465;"; // 🗑️
-
-	// 	return `
-	// 	<div class="bg-white rounded-lg shadow-md border-l-4 ${
-	// 		currentStatusStyles.border
-	// 	} flex flex-col">
-	// 		<div class="p-5 grow">
-	// 			<div class="flex justify-between items-start mb-2">
-	// 				<h3 class="text-xl font-bold text-green-950 pr-2 break-words">
-	// 					${escapeHTML(ticket.title || "Untitled")}
-	// 				</h3>
-	// 				<span class="px-3 py-1 rounded-full text-xs font-semibold uppercase shrink-0 ${
-	// 					currentStatusStyles.tag
-	// 				}">
-	// 					${escapeHTML(ticket.status?.replace("_", " ") || "N/A")}
-	// 				</span>
-	// 			</div>
-
-	// 			<p class="text-gray-700 mt-2 text-sm break-words">
-	// 				${
-	// 					ticket.description
-	// 						? escapeHTML(ticket.description)
-	// 						: '<span class="italic text-gray-500">No description provided.</span>'
-	// 				}
-	// 			</p>
-	// 		</div>
-
-	// 		<div class="py-5 px-5 bg-gray-50 rounded-b-lg border-t border-gray-100 flex justify-between items-center">
-	// 			<div class="flex items-center space-x-4 flex-wrap gap-y-2">
-	// 				${
-	// 					ticket.priority
-	// 						? `
-	// 						<span class="flex items-center px-3 py-1 rounded-full text-xs font-semibold ${currentPriorityStyles}">
-	// 							<span class="text-sm mr-1">${exclamationIcon}</span>
-	// 							${escapeHTML(ticket.priority)}
-	// 						</span>`
-	// 						: ""
-	// 				}
-	// 				<div class="flex items-center text-sm text-gray-600">
-	// 					<span class="mr-1.5 text-sm">${calendarIcon}</span>
-	// 					<span>${formattedDate}</span>
-	// 				</div>
-	// 			</div>
-
-	// 			<div class="flex space-x-2">
-	// 				<button data-ticket-id="${ticket.id}"
-	// 					class="edit-button p-2 text-gray-500 rounded-full hover:bg-gray-200 hover:text-orange-600 transition-colors"
-	// 					aria-label="Edit ticket">
-	// 					<span class="text-base">${pencilIcon}</span>
-	// 				</button>
-
-	// 				<button data-ticket-id="${ticket.id}"
-	// 					class="delete-button p-2 text-gray-500 rounded-full hover:bg-gray-200 hover:text-red-600 transition-colors"
-	// 					aria-label="Delete ticket">
-	// 					<span class="text-base">${trashIcon}</span>
-	// 				</button>
-	// 			</div>
-	// 		</div>
-	// 	</div>
-	// `;
-	// }
-
-	// --- Toast Helpers ---
 	function toastSuccess(message) {
 		Toastify({
 			text: message,
@@ -582,7 +461,6 @@ document.addEventListener("DOMContentLoaded", () => {
 		}).showToast();
 	}
 
-	// --- HTML Escaping Helper ---
 	function escapeHTML(str) {
 		const stringified = String(str ?? "");
 		return stringified.replace(/[&<>"']/g, function (match) {

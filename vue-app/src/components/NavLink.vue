@@ -22,7 +22,6 @@
 <script setup>
 import { RouterLink } from "vue-router";
 
-// 1. Define the props the component accepts
 const props = defineProps({
 	to: {
 		type: String,
@@ -38,10 +37,8 @@ const props = defineProps({
 	},
 });
 
-// 2. Define the 'toggleSidebar' event it can emit (like onToggleSidebar)
 const emit = defineEmits(["toggleSidebar"]);
 
-// 3. This function replicates your 'onClick' logic
 function handleClick() {
 	if (props.isSidebarOpen) {
 		emit("toggleSidebar");

@@ -4,7 +4,6 @@
 			{{ isEditMode ? "Edit Ticket" : "Create New Ticket" }}
 		</h2>
 		<form @submit="onSubmit" class="space-y-4">
-
 			<div>
 				<label for="title" class="block text-sm font-medium text-gray-700">
 					Title <span class="text-red-500">*</span>
@@ -17,10 +16,13 @@
 					:class="[
 						'w-full mt-1 border rounded-md shadow-sm p-2',
 						'focus:outline-none focus:ring-checkerr-orange focus:border-checkerr-orange',
-						 titleMeta.touched && titleError ? 'border-red-500' : 'border-gray-300',
-					]"
-				/>
-				<p v-if="titleError" class="mt-1 text-xs text-red-500">{{ titleError }}</p>
+						titleMeta.touched && titleError
+							? 'border-red-500'
+							: 'border-gray-300',
+					]" />
+				<p v-if="titleError" class="mt-1 text-xs text-red-500">
+					{{ titleError }}
+				</p>
 			</div>
 
 			<div>
@@ -34,14 +36,17 @@
 					:class="[
 						'w-full mt-1 border rounded-md shadow-sm p-2 bg-white',
 						'focus:outline-none focus:ring-checkerr-orange focus:border-checkerr-orange',
-						statusMeta.touched && statusError ? 'border-red-500' : 'border-gray-300',
-					]"
-				>
+						statusMeta.touched && statusError
+							? 'border-red-500'
+							: 'border-gray-300',
+					]">
 					<option value="open">Open</option>
 					<option value="in_progress">In Progress</option>
 					<option value="closed">Closed</option>
 				</select>
-				<p v-if="statusError" class="mt-1 text-xs text-red-500">{{ statusError }}</p>
+				<p v-if="statusError" class="mt-1 text-xs text-red-500">
+					{{ statusError }}
+				</p>
 			</div>
 
 			<div>
@@ -51,8 +56,7 @@
 				<select
 					v-model="priorityValue"
 					id="priority"
-					class="w-full mt-1 border rounded-md shadow-sm p-2 bg-white focus:outline-none focus:ring-checkerr-orange focus:border-checkerr-orange"
-				>
+					class="w-full mt-1 border rounded-md shadow-sm p-2 bg-white focus:outline-none focus:ring-checkerr-orange focus:border-checkerr-orange">
 					<option value="low">Low</option>
 					<option value="medium">Medium</option>
 					<option value="high">High</option>
@@ -60,22 +64,28 @@
 			</div>
 
 			<div>
-				<label for="description" class="block text-sm font-medium text-gray-700">
+				<label
+					for="description"
+					class="block text-sm font-medium text-gray-700">
 					Description
 				</label>
 				<textarea
 					v-model="descriptionValue"
 					id="description"
 					rows="4"
-					class="w-full mt-1 border rounded-md shadow-sm p-2 focus:outline-none focus:ring-checkerr-orange focus:border-checkerr-orange"
-				></textarea>
+					class="w-full mt-1 border rounded-md shadow-sm p-2 focus:outline-none focus:ring-checkerr-orange focus:border-checkerr-orange"></textarea>
 			</div>
 
 			<div class="flex justify-end space-x-3">
-				<button type="button" @click="$emit('close')" class="px-4 py-2 text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200 font-medium">
+				<button
+					type="button"
+					@click="$emit('close')"
+					class="px-4 py-2 text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200 font-medium">
 					Cancel
 				</button>
-				<button type="submit" class="px-4 py-2 text-white bg-checkerr-orange rounded-md hover:bg-opacity-80 font-medium">
+				<button
+					type="submit"
+					class="px-4 py-2 text-white bg-checkerr-orange rounded-md hover:bg-opacity-80 font-medium">
 					{{ isEditMode ? "Update" : "Create" }}
 				</button>
 			</div>
@@ -101,12 +111,14 @@ const isEditMode = computed(() => !!props.editingTicket);
 
 const validateTitle = (value) => {
 	if (!value || !String(value).trim()) return "Title is mandatory";
-	if (String(value).trim().length < 3) return "Title must be at least 3 characters";
+	if (String(value).trim().length < 3)
+		return "Title must be at least 3 characters";
 	return true;
 };
 const validateStatus = (value) => {
 	if (!value) return "Status is mandatory";
-	if (!["open", "in_progress", "closed"].includes(value)) return "Invalid status";
+	if (!["open", "in_progress", "closed"].includes(value))
+		return "Invalid status";
 	return true;
 };
 
@@ -119,21 +131,31 @@ const { handleSubmit, resetForm, setValues, errors } = useForm({
 	},
 });
 
-const { value: titleValue, errorMessage: titleError, meta: titleMeta, handleBlur: titleBlur } = useField('title', validateTitle);
-const { value: statusValue, errorMessage: statusError, meta: statusMeta, handleBlur: statusBlur } = useField('status', validateStatus);
-const { value: priorityValue } = useField('priority');
-const { value: descriptionValue } = useField('description');
+const {
+	value: titleValue,
+	errorMessage: titleError,
+	meta: titleMeta,
+	handleBlur: titleBlur,
+} = useField("title", validateTitle);
+const {
+	value: statusValue,
+	errorMessage: statusError,
+	meta: statusMeta,
+	handleBlur: statusBlur,
+} = useField("status", validateStatus);
+const { value: priorityValue } = useField("priority");
+const { value: descriptionValue } = useField("description");
 
 watch(
 	() => props.editingTicket,
 	(newTicket) => {
 		const initial = newTicket
 			? {
-				  title: newTicket.title,
-				  description: newTicket.description || '',
-				  status: newTicket.status,
-				  priority: newTicket.priority || 'low',
-				}
+					title: newTicket.title,
+					description: newTicket.description || "",
+					status: newTicket.status,
+					priority: newTicket.priority || "low",
+			  }
 			: { title: "", description: "", status: "open", priority: "low" };
 		resetForm({ values: initial });
 	},
@@ -141,11 +163,12 @@ watch(
 );
 
 const onSubmit = handleSubmit(async (values) => {
-	// Double check validation errors manually
 	if (titleError.value || statusError.value) {
-		console.error("onSubmit blocked by validation errors (manual check):", { title: titleError.value, status: statusError.value });
+		console.error("onSubmit blocked by validation errors (manual check):", {
+			title: titleError.value,
+			status: statusError.value,
+		});
 		toast.error("Please fix the errors in the form.");
-		// Ensure fields are marked as touched to show errors
 		titleMeta.touched = true;
 		statusMeta.touched = true;
 		return;
@@ -158,14 +181,18 @@ const onSubmit = handleSubmit(async (values) => {
 			if (result && result.success) {
 				toast.success("Ticket updated successfully!");
 			} else {
-				toast.error(`Error updating ticket: ${result?.error || "Unknown error"}`);
+				toast.error(
+					`Error updating ticket: ${result?.error || "Unknown error"}`
+				);
 			}
 		} else {
 			result = ticketsStore.createTicket(values);
 			if (result && result.success) {
 				toast.success("Ticket created successfully!");
 			} else {
-				toast.error(`Error creating ticket: ${result?.error || "Unknown error"}`);
+				toast.error(
+					`Error creating ticket: ${result?.error || "Unknown error"}`
+				);
 			}
 		}
 

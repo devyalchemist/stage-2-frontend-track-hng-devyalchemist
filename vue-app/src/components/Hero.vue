@@ -44,6 +44,5 @@
 </template>
 
 <script setup>
-// 1. We must import RouterLink from vue-router
 import { RouterLink } from "vue-router";
 </script>

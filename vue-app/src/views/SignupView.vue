@@ -1,9 +1,7 @@
 <template>
-	<!-- 1. Wrap the entire page in AppContainer -->
 	<AppContainer>
 		<div
 			class="flex items-center justify-center min-h-screen bg-gray-100 relative">
-			<!-- 2. Back Button -->
 			<button
 				@click="goBack"
 				class="absolute top-6 left-6 md:top-8 md:left-8 text-gray-500 hover:text-checkerr-orange transition-colors"
@@ -11,9 +9,7 @@
 				<v-icon name="hi-arrow-left" scale="1.75" />
 			</button>
 
-			<!-- Auth Card -->
 			<div class="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-lg">
-				<!-- Header -->
 				<div class="text-center">
 					<h1 class="text-3xl font-bold text-checkerr-green">
 						Create your Chekaa Account
@@ -21,9 +17,7 @@
 					<p class="mt-2 text-gray-600">Get started in just a few steps.</p>
 				</div>
 
-				<!-- 3. Vee-Validate Form -->
 				<Form @submit="onSubmit" class="space-y-6">
-					<!-- Email Field -->
 					<div>
 						<label
 							htmlFor="email"
@@ -49,7 +43,6 @@
 						<ErrorMessage name="email" class="mt-1 text-xs text-red-500" />
 					</div>
 
-					<!-- Password Field -->
 					<div>
 						<label
 							htmlFor="password"
@@ -76,7 +69,6 @@
 						<ErrorMessage name="password" class="mt-1 text-xs text-red-500" />
 					</div>
 
-					<!-- Confirm Password Field -->
 					<div>
 						<label
 							htmlFor="confirmPassword"
@@ -105,7 +97,6 @@
 							class="mt-1 text-xs text-red-500" />
 					</div>
 
-					<!-- Submit Button -->
 					<div>
 						<button
 							type="submit"
@@ -115,7 +106,6 @@
 					</div>
 				</Form>
 
-				<!-- Link to Login -->
 				<p class="text-sm text-center text-gray-600">
 					Already have an account?
 					<RouterLink
@@ -135,21 +125,17 @@ import { useAuthStore } from "@/stores/authStore";
 import { useToast } from "vue-toastification";
 import { Form, Field, ErrorMessage, defineRule } from "vee-validate";
 import { required, email, min, confirmed } from "@vee-validate/rules";
-import AppContainer from "@/components/AppContainer.vue"; // Import AppContainer
+import AppContainer from "@/components/AppContainer.vue";
 
-// --- 1. Define Vee-Validate Rules ---
-// We need to define the rules we want to use
 defineRule("required", required);
 defineRule("email", email);
 defineRule("min", min);
-defineRule("confirmed", confirmed); // This handles password matching
+defineRule("confirmed", confirmed);
 
-// --- 2. Initialize tools ---
 const router = useRouter();
 const authStore = useAuthStore();
 const toast = useToast();
 
-// --- 3. onSubmit function ---
 function onSubmit(data) {
 	const signupSuccess = authStore.signup(data);
 
@@ -157,21 +143,15 @@ function onSubmit(data) {
 		toast.success("Account created successfully! Redirecting...");
 		router.push("/dashboard");
 	} else {
-		// Error is handled inside the store (console.error)
-		// We show a generic message here
 		toast.error("Signup failed. An account may already exist.");
 	}
 }
 
-// --- 4. Back button function ---
 function goBack() {
 	router.go(-1);
 }
 
-// --- 5. Validation Rules for the Template ---
-// These are strings that Vee-Validate understands because we defined the rules above
 const validateEmail = "required|email";
 const validatePassword = "required|min:6";
-// '@password' tells the 'confirmed' rule which field to compare against
 const validateConfirmPassword = "required|confirmed:@password";
 </script>

@@ -1,9 +1,7 @@
-{# views/pages/tickets.twig #}
-{% extends "layouts/app_layout.twig" %} {# Use the App Layout #}
+{% extends "layouts/app_layout.twig" %}
 
 {% block app_content %}
-    <div class="space-y-6"> {# Removed p-6/p-8, layout adds padding #}
-        {# Header with Create button #}
+    <div class="space-y-6">
         <div class="flex justify-between items-center">
             <h1 class="text-3xl font-bold text-checkerr-green">Manage Tickets</h1>
             <button id="toggle-form-button"
@@ -13,12 +11,10 @@
             </button>
         </div>
 
-        {# Form Container #}
         <div id="ticket-form-container" class="hidden">
             <p>Loading form...</p>
         </div>
 
-        {# Ticket List Container #}
         <div id="ticket-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <p class="text-gray-500 col-span-3 italic">Loading tickets...</p>
         </div>
@@ -26,6 +22,5 @@
 {% endblock %}
 
 {% block app_scripts %}
-    {# tickets.js handles form toggle, loading tickets, CRUD #}
     <script src="/js/tickets.js"></script>
 {% endblock %}

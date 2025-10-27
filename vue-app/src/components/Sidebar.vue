@@ -34,10 +34,8 @@
 </template>
 
 <script setup>
-// 6. Import the NavLink component we're about to create
 import NavLink from "./NavLink.vue";
 
-// 7. defineProps is how Vue receives props (like isSidebarOpen)
 defineProps({
 	isSidebarOpen: {
 		type: Boolean,
@@ -45,6 +43,5 @@ defineProps({
 	},
 });
 
-// 8. defineEmits is how Vue declares function props (like onToggleSidebar)
 defineEmits(["toggleSidebar"]);
 </script>

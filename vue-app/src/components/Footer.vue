@@ -11,6 +11,4 @@
 </template>
 
 <script setup>
-// This component has no JavaScript logic, so the script tag is empty.
-// We use '<script setup>' to tell Vue we're using the modern "Composition API".
 </script>

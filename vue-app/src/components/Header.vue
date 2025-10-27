@@ -27,12 +27,9 @@
 import { storeToRefs } from "pinia";
 import { useAuthStore } from "@/stores/authStore";
 
-// 1. Get the auth store
 const authStore = useAuthStore();
 
-// 2. Get the functions and state from the store
-// We use 'storeToRefs' to make 'user' and 'userInitial' reactive
-// (This is so they update when the state changes)
+
 const { user, userInitial } = storeToRefs(authStore);
 const { logout } = authStore;
 </script>

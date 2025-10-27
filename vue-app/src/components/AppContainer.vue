@@ -7,6 +7,5 @@
 </template>
 
 <script setup>
-// We import the Footer just like in React
 import Footer from "./Footer.vue";
 </script>

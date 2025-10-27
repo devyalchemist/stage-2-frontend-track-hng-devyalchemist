@@ -1,4 +1,3 @@
-// public/js/dashboard.js
 document.addEventListener("DOMContentLoaded", () => {
 	console.log("Dashboard JS Loaded");
 
@@ -64,12 +63,11 @@ document.addEventListener("DOMContentLoaded", () => {
 				gravity: "bottom",
 				position: "right",
 			}).showToast();
-			setTimeout(() => window.location.replace("/auth/login"), 1000); // Use replace
+			setTimeout(() => window.location.replace("/auth/login"), 1000); 
 		});
 	}
 });
 
-// --- Corrected Helper Function ---
 function createStatCard(title, value, color, iconSymbol = " ") {
 	const colorClasses = {
 		blue: { border: "border-blue-500", text: "text-blue-500" },
@@ -78,7 +76,6 @@ function createStatCard(title, value, color, iconSymbol = " ") {
 		gray: { border: "border-gray-500", text: "text-gray-500" },
 	};
 	const currentColors = colorClasses[color] || colorClasses.gray;
-	// Simple large text/emoji icon placeholder
 	const iconHTML = `<span class="w-8 h-8 flex items-center justify-center text-3xl ${currentColors.text}">${iconSymbol}</span>`;
 
 	return `
@@ -96,7 +93,6 @@ function createStatCard(title, value, color, iconSymbol = " ") {
     `;
 }
 
-// --- Bar Chart Helper ---
 function createBar(value, total, label, colorClass) {
 	const height = total > 0 ? (value / total) * 100 : 0;
 	return `

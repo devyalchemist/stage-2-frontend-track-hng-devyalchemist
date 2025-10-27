@@ -3,7 +3,7 @@
 		:class="[
 			'bg-white rounded-lg shadow-md flex flex-col',
 			'border-l-4',
-			currentStatusStyles.border, // Uses computed property
+			currentStatusStyles.border,
 		]">
 		<div class="p-5 grow">
 			<div class="flex justify-between items-start mb-2">
@@ -12,8 +12,8 @@
 				</h3>
 				<span
 					:class="[
-						'px-3 py-1 rounded-full text-xs font-semibold uppercase shrink-0', // Corrected flex-shrink-0 to shrink-0
-						currentStatusStyles.tag, // Uses computed property
+						'px-3 py-1 rounded-full text-xs font-semibold uppercase shrink-0',
+						currentStatusStyles.tag,
 					]">
 					{{ ticket.status.replace("_", " ") }}
 				</span>
@@ -36,7 +36,7 @@
 					v-if="ticket.priority"
 					:class="[
 						'flex items-center px-3 py-1 rounded-full text-xs font-semibold',
-						currentPriorityStyles, // Uses computed property
+						currentPriorityStyles,
 					]">
 					<v-icon name="hi-exclamation-circle" class="w-4 h-4 mr-1" />
 					{{ ticket.priority }}
@@ -69,7 +69,6 @@
 <script setup>
 import { computed } from "vue";
 
-// Props and Emits are correct
 const props = defineProps({
 	ticket: {
 		type: Object,
@@ -78,7 +77,6 @@ const props = defineProps({
 });
 const emit = defineEmits(["edit", "delete"]);
 
-// Style lookups are correct
 const statusStyles = {
 	open: { tag: "bg-green-100 text-green-800", border: "border-green-500" },
 	in_progress: {
@@ -93,7 +91,6 @@ const priorityStyles = {
 	low: "bg-gray-100 text-gray-800",
 };
 
-// Computed properties seem correct
 const currentStatusStyles = computed(() => {
 	return statusStyles[props.ticket.status] || statusStyles.closed;
 });

@@ -1,8 +1,6 @@
-{# views/pages/signup.twig #}
 {% extends "layouts/main.twig" %}
 
 {% block content %}
-    {# ... (Your existing HTML form and layout divs) ... #}
     <div class="flex items-center justify-center min-h-screen bg-gray-100 relative px-4 sm:px-0">
         <a href="/" class="absolute top-6 left-6 md:top-8 md:left-8 text-gray-500 hover:text-checkerr-orange transition-colors" aria-label="Go back home">
            &larr; Back
@@ -54,26 +52,22 @@
         const confirmPasswordError = document.getElementById('confirmPassword-error');
 
         signupForm.addEventListener('submit', (event) => {
-            // 1. Prevent default submission
             event.preventDefault();
             console.log("Signup form submitted");
 
-            // Clear previous errors
             emailError.textContent = '';
             passwordError.textContent = '';
             confirmPasswordError.textContent = '';
 
-            // 2. Get form data
             const email = emailInput.value.trim();
             const password = passwordInput.value;
             const confirmPassword = confirmPasswordInput.value;
 
-            // 3. Client-side Validation
             let isValid = true;
             if (!email) {
                 emailError.textContent = 'Email is required';
                 isValid = false;
-            } else if (!/^\S+@\S+$/i.test(email)) { // Simple email format check
+            } else if (!/^\S+@\S+$/i.test(email)) { 
                  emailError.textContent = 'Invalid email format';
                  isValid = false;
             }
@@ -93,43 +87,38 @@
             }
 
             if (!isValid) {
-                return; // Stop if validation fails
+                return;
             }
 
-            // 4. Check if user already exists (based on your React single-user logic)
             const existingUserString = localStorage.getItem('ticketapp_user');
             if (existingUserString) {
                 console.warn("Signup blocked: User already exists in localStorage.");
                 Toastify({ text: "An account already exists. Please log in.", duration: 3000, gravity: "bottom", position: "right", style: { background: "linear-gradient(to right, #ff5f6d, #ffc371)" }}).showToast();
-                emailError.textContent = 'An account with this email might already exist.'; // Generic message
+                emailError.textContent = 'An account with this email might already exist.';
                 return;
             }
 
-            // 5. Create User Object (matching React logic)
             const newUser = {
-                id: email, // Use email as ID
+                id: email, 
                 email: email,
-                name: email.split('@')[0], // Generate name
-                password: password, // Store password (for mock login)
-                isAuthenticated: true // As per your React code
+                name: email.split('@')[0], 
+                password: password, 
+                isAuthenticated: true 
             };
             console.log("Creating new user:", newUser);
 
-            // 6. Save User, Session, and initialize Tickets
             try {
                 localStorage.setItem('ticketapp_user', JSON.stringify(newUser));
                 const mockToken = `mock-token-${Date.now()}`;
                 localStorage.setItem('ticketapp_session', mockToken);
-                // Initialize tickets as an empty array
                 localStorage.setItem('ticketapp_tickets', JSON.stringify([]));
 
                 console.log("User, session, and tickets initialized in localStorage.");
 
-                // 7. Show success toast and redirect
                 Toastify({ text: "Account Created! Redirecting...", duration: 2000, gravity: "bottom", position: "right", style: { background: "linear-gradient(to right, #00b09b, #96c93d)" }}).showToast();
 
                 setTimeout(() => {
-                    window.location.href = '/dashboard'; // Redirect to dashboard
+                    window.location.href = '/dashboard';
                 }, 1500);
 
             } catch (e) {

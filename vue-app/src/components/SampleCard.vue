@@ -20,21 +20,13 @@
 </template>
 
 <script setup>
-// This is your JavaScript block (note the 'setup' keyword)
 import { ref } from "vue";
 
-// 'ref()' creates a reactive variable, just like React's 'useState()'
 const count = ref(0);
 
-// This function is automatically available to the template
 function increment() {
-	// You must use .value to access or change the value of a 'ref'
 	count.value++;
 }
 </script>
 
-<style scoped>
-/* This block is for CSS that *only* applies to this component.
-  We don't need it now because Tailwind is doing all the work.
-*/
-</style>
+<style scoped></style>

@@ -1,58 +1,43 @@
-{# views/layouts/app_layout.twig #}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="/assets/main.css" rel="stylesheet"> {# Tailwind CSS #}
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"> {# Toastify CSS #}
+    <link href="/assets/main.css" rel="stylesheet"> 
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
     <title>{{ pageTitle|default('Chekaa App') }}</title>
-    {# Add any other head elements if needed #}
 </head>
 <body class="bg-gray-100">
 
-    {# Mimics AppContainer: Max-width and centering #}
     <div class="w-full max-w-[1440px] mx-auto">
 
-        {# Mimics AppLayout structure: Flex container for Sidebar + Main Content #}
         <div class="flex h-screen overflow-hidden bg-gray-100">
 
-            {# Sidebar Partial (will need client-side JS for toggle state) #}
-            {# We pass an ID so JS can find and control it #}
+           
             {% include 'partials/sidebar.twig' with { 'id': 'app-sidebar' } %}
 
-            {# Main content area (Header + Page Content) #}
             <div class="flex-1 flex flex-col overflow-hidden">
 
-                {# Header Partial #}
+
                 {% include 'partials/header.twig' with { 'id': 'app-header' } %}
 
-                {# Main scrollable content area #}
                 <main id="main-content" class="flex-1 overflow-auto p-6 md:p-8">
-                    {# Page-specific content goes here #}
                     {% block app_content %}{% endblock %}
                 </main>
 
-            </div> {# End Main Content Area #}
-        </div> {# End Flex Container #}
+            </div> 
+        </div> 
 
-    </div> {# End AppContainer wrapper #}
+    </div> 
 
-    {# Footer Partial - Placed outside AppContainer wrapper if full-width bg needed, or inside if constrained #}
-    {# Let's keep it consistent with the previous main.twig placement #}
-    {# Note: Footer needs separate include if app_layout doesn't extend main.twig #}
-    {# {% include 'partials/footer.twig' %} #}
-     {# If app_layout *replaces* main.twig for authed users, include footer here #}
+    
 
 
-    {# JS Libraries #}
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 
-    {# Client-side JS for Layout (Sidebar Toggle, Auth Guard) #}
-    <script src="/js/authGuard.js"></script> {# Run auth check first #}
-    <script src="/js/appLayout.js"></script> {# Handles sidebar state #}
+    <script src="/js/authGuard.js"></script> 
+    <script src="/js/appLayout.js"></script> 
 
-    {# Block for page-specific scripts #}
     {% block app_scripts %}{% endblock %}
 
 </body>

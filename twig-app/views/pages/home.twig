@@ -1,8 +1,6 @@
-{# views/pages/home.twig #}
-{% extends "layouts/main.twig" %} {# Tell Twig to use the main layout #}
+{% extends "layouts/main.twig" %}
 
 {% block content %}
-    {# Include the Hero partial #}
     <div class="w-full bg-gray-900 text-white py-2 px-4 sm:px-6 lg:px-8 text-sm flex justify-center space-x-6">
         <span class="text-gray-400">Current: TWIG</span>
         <a href="https://stage-2-frontend-track-hng-devyalch.vercel.app/" class="text-blue-400 hover:text-blue-300 transition-colors">Switch to React</a>
@@ -10,6 +8,5 @@
     </div>
     {% include 'partials/hero.twig' %}
 
-    {# Include the AboutApp partial #}
     {% include 'partials/about_app.twig' %}
 {% endblock %}

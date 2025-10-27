@@ -16,10 +16,9 @@ const props = defineProps({
 	value: { type: Number, required: true },
 	total: { type: Number, required: true },
 	label: { type: String, required: true },
-	color: { type: String, required: true }, // Expecting e.g., 'bg-green-500'
+	color: { type: String, required: true }, 
 });
 
-// Calculate height percentage
 const height = computed(() => {
 	return props.total > 0 ? (props.value / props.total) * 100 : 0;
 });

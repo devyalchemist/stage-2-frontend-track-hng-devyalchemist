@@ -71,5 +71,4 @@
 </template>
 
 <script setup>
-// This component has no logic, so the script is empty.
 </script>

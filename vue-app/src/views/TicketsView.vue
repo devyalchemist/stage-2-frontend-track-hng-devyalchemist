@@ -52,7 +52,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue"; // Removed unused onMounted import initially
+import { ref, onMounted } from "vue";
 import { storeToRefs } from "pinia";
 import { useTicketsStore } from "@/stores/ticketsStore";
 import { useToast } from "vue-toastification";
@@ -60,13 +60,10 @@ import TicketForm from "@/components/TicketForm.vue";
 import TicketCard from "@/components/TicketCard.vue";
 
 const ticketsStore = useTicketsStore();
-// Use storeToRefs to keep reactivity on state properties
 const { tickets, isLoading } = storeToRefs(ticketsStore);
 const toast = useToast();
 const isFormVisible = ref(false);
-const editingTicket = ref(null); // Holds the ticket object being edited
-
-// Removed onMounted hook - the store's watch effect handles loading
+const editingTicket = ref(null);
 
 function handleEdit(ticket) {
 	editingTicket.value = ticket;
@@ -75,7 +72,7 @@ function handleEdit(ticket) {
 
 function handleDelete(ticketId) {
 	if (window.confirm("Are you sure you want to delete this ticket?")) {
-		const result = ticketsStore.deleteTicket(ticketId); // Call store action
+		const result = ticketsStore.deleteTicket(ticketId);
 		if (result.success) {
 			toast.success("Ticket deleted");
 		} else {
@@ -85,12 +82,12 @@ function handleDelete(ticketId) {
 }
 
 function showCreateForm() {
-	editingTicket.value = null; // Ensure we're in create mode
+	editingTicket.value = null;
 	isFormVisible.value = true;
 }
 
 function closeForm() {
 	isFormVisible.value = false;
-	editingTicket.value = null; // Clear editing state
+	editingTicket.value = null;
 }
 </script>

@@ -72,7 +72,7 @@
 </template>
 
 <script setup>
-import { computed, onMounted } from "vue"; // Keep onMounted if store watcher isn't used
+import { computed, onMounted } from "vue"; 
 import { RouterLink } from "vue-router";
 import { storeToRefs } from "pinia";
 import { useAuthStore } from "@/stores/authStore";
@@ -83,14 +83,11 @@ import Bar from "@/components/Bar.vue";
 const authStore = useAuthStore();
 const ticketsStore = useTicketsStore();
 
-// Use storeToRefs for reactive state access
 const { user } = storeToRefs(authStore);
 const { tickets, isLoading } = storeToRefs(ticketsStore);
 
-// --- Calculate Stats ---
-// computed() is Vue's useMemo()
+
 const stats = computed(() => {
-	// Safely access tickets.value, default to empty array if null/undefined
 	const currentTickets = tickets.value || [];
 	const total = currentTickets.length;
 	const open = currentTickets.filter((t) => t?.status === "open").length;
@@ -101,11 +98,5 @@ const stats = computed(() => {
 	return { total, open, inProgress, closed };
 });
 
-// Optional: Keep onMounted if you want explicit loading trigger here
-// onMounted(() => {
-//   // Check if tickets need loading (e.g., if navigating directly here)
-//   if (isLoading.value || tickets.value.length === 0) {
-//      ticketsStore.loadAndSetUserTickets();
-//   }
-// });
+
 </script>

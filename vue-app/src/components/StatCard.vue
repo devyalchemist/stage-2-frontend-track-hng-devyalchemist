@@ -18,19 +18,17 @@
 <script setup>
 import { computed } from "vue";
 
-// Define the props
 const props = defineProps({
 	title: { type: String, required: true },
 	value: { type: [String, Number], required: true },
 	color: { type: String, default: "gray" },
 });
 
-// Calculate the border color class based on the 'color' prop
 const borderColorClass = computed(() => {
 	const colorMap = {
 		blue: "border-blue-500",
 		green: "border-green-500",
-		yellow: "border-yellow-500", // Corrected from yellow-400
+		yellow: "border-yellow-500", 
 		gray: "border-gray-500",
 	};
 	return colorMap[props.color] || colorMap.gray;

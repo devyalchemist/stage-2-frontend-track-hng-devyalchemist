@@ -1,46 +1,39 @@
-// public/js/appLayout.js
 document.addEventListener('DOMContentLoaded', () => {
     const sidebar = document.getElementById('app-sidebar');
     const toggleButton = document.getElementById('sidebar-toggle-button');
-    const mainContent = document.getElementById('main-content'); // Get main content area
+    const mainContent = document.getElementById('main-content'); 
     const navLinks = document.querySelectorAll('.nav-link');
     const linkTexts = document.querySelectorAll('.link-text');
     const iconOpen = toggleButton?.querySelector('.icon-open');
     const iconClosed = toggleButton?.querySelector('.icon-closed');
 
-    // Header elements (populated after auth check)
     const welcomeMsg = document.getElementById('header-welcome-message');
     const userInitial = document.getElementById('header-user-initial');
     const logoutButton = document.getElementById('logout-button');
 
-    let isSidebarOpen = false; // Initial state
+    let isSidebarOpen = false; 
 
     function updateSidebarState() {
         if (sidebar) {
-            sidebar.dataset.open = isSidebarOpen; // Toggle data attribute
+            sidebar.dataset.open = isSidebarOpen; 
         }
         navLinks.forEach(link => link.dataset.open = isSidebarOpen);
         linkTexts.forEach(text => text.dataset.open = isSidebarOpen);
 
-        // Toggle button icons
         if (iconOpen && iconClosed) {
             iconOpen.classList.toggle('hidden', !isSidebarOpen);
             iconClosed.classList.toggle('hidden', isSidebarOpen);
         }
 
-        // --- Mobile Content Hiding Logic (from AppLayout.jsx) ---
-        // Add/remove a class or style to hide main content on small screens when open
         if (mainContent) {
-            if (isSidebarOpen && window.innerWidth < 640) { // Check screen width (sm breakpoint)
-                 mainContent.classList.add('hidden', 'sm:block'); // Hide on mobile, show on sm+
+            if (isSidebarOpen && window.innerWidth < 640) { 
+                 mainContent.classList.add('hidden', 'sm:block'); 
             } else {
-                 mainContent.classList.remove('hidden'); // Ensure visible otherwise
-                 // We don't need sm:block always, just remove hidden
+                 mainContent.classList.remove('hidden'); 
             }
         }
     }
 
-    // --- Event Listener for Toggle Button ---
     if (toggleButton) {
         toggleButton.addEventListener('click', () => {
             isSidebarOpen = !isSidebarOpen;
@@ -48,8 +41,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- Update Header & Add Logout Listener ---
-    // This assumes authGuard.js runs first
     const userString = localStorage.getItem('ticketapp_user');
     if (userString) {
         try {
@@ -68,14 +59,11 @@ document.addEventListener('DOMContentLoaded', () => {
             localStorage.removeItem('ticketapp_session');
             localStorage.removeItem('ticketapp_user');
             Toastify({ text: "Logged out.", duration: 2000 }).showToast();
-            window.location.replace('/auth/login'); // Use replace
+            window.location.replace('/auth/login'); 
         });
     }
 
-    // --- Responsive Handling ---
-     // Update content visibility on resize if sidebar state matters
      window.addEventListener('resize', () => {
-         // Re-apply mobile content hiding logic based on current state and new width
          if (mainContent) {
              if (isSidebarOpen && window.innerWidth < 640) {
                  mainContent.classList.add('hidden', 'sm:block');
@@ -85,7 +73,5 @@ document.addEventListener('DOMContentLoaded', () => {
          }
      });
 
-    // --- Initial State Update ---
-    // Set initial state based on default (closed)
     updateSidebarState();
 }); 

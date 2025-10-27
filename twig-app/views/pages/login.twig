@@ -1,8 +1,6 @@
-{# views/pages/login.twig #}
 {% extends "layouts/main.twig" %}
 
 {% block content %}
-    {# ... (Your existing HTML form and layout divs) ... #}
     <div class="flex items-center justify-center min-h-screen bg-gray-100 relative px-4 sm:px-0">
         <a href="/" class="absolute top-6 left-6 md:top-8 md:left-8 text-gray-500 hover:text-checkerr-orange transition-colors" aria-label="Go back home">
            &larr; Back
@@ -47,9 +45,6 @@
         const emailError = document.getElementById('email-error');
         const passwordError = document.getElementById('password-error');
 
-        // Test Toastify on page load (remove after confirming it works)
-        // Toastify({ text: "Toastify is loaded!", duration: 1500 }).showToast();
-
         loginForm.addEventListener('submit', (event) => {
             event.preventDefault();
             console.log("Login form submitted");
@@ -66,11 +61,10 @@
             }
 
             const storedUserString = localStorage.getItem('ticketapp_user');
-            console.log("Value of storedUserString:", storedUserString); // Check this value
+            console.log("Value of storedUserString:", storedUserString);
 
-            // --- Check if this block is executing ---
             if (!storedUserString || storedUserString === 'undefined' || storedUserString === 'null') {
-                console.error("No user found in localStorage or value is invalid."); // Log entry into this block
+                console.error("No user found in localStorage or value is invalid.");
                 Toastify({
                     text: "No account found. Please sign up.",
                     duration: 3000,
@@ -79,23 +73,20 @@
                     style: { background: "linear-gradient(to right, #ff5f6d, #ffc371)" }
                 }).showToast();
                 passwordError.textContent = 'No account found.';
-                return; // Stop execution
+                return;
             }
-            // --- End Check ---
 
             let storedUser;
             try {
                 storedUser = JSON.parse(storedUserString);
                 console.log("Parsed stored user:", storedUser);
-                // **Add check**: Ensure parsed user is a valid object with email/password
                 if (!storedUser || typeof storedUser !== 'object' || !storedUser.email || !storedUser.password) {
                     throw new Error("Stored user data is incomplete or invalid.");
                 }
             } catch (e) {
                 console.error("Error parsing stored user data:", e);
                 Toastify({ text: "Error reading user data.", duration: 3000, gravity: "bottom", position: "right", style: { background: "linear-gradient(to right, #ff5f6d, #ffc371)" }}).showToast();
-                passwordError.textContent = 'Failed to read stored user.'; // Give feedback
-                // **Consider clearing bad data**: localStorage.removeItem('ticketapp_user');
+                passwordError.textContent = 'Failed to read stored user.';
                 return;
             }
 
@@ -116,82 +107,3 @@
 
 </script>
 {% endblock %}
-
-{# {% block scripts %}
-<script>
-    // Wait for the DOM to be fully loaded
-    document.addEventListener('DOMContentLoaded', () => {
-        const loginForm = document.getElementById('login-form');
-        const emailInput = document.getElementById('email');
-        const passwordInput = document.getElementById('password');
-        const emailError = document.getElementById('email-error');
-        const passwordError = document.getElementById('password-error');
-
-        loginForm.addEventListener('submit', (event) => {
-            // 1. Prevent the default form submission (page reload)
-            event.preventDefault();
-            console.log("Login form submitted");
-
-            // Clear previous errors
-            emailError.textContent = '';
-            passwordError.textContent = '';
-
-            // 2. Get form data
-            const email = emailInput.value.trim();
-            const password = passwordInput.value; // Don't trim password
-
-            // Basic validation (redundant with 'required' but good practice)
-            if (!email || !password) {
-                if (!email) emailError.textContent = 'Email is required';
-                if (!password) passwordError.textContent = 'Password is required';
-                return;
-            }
-
-            // 3. Read user data from localStorage
-            const storedUserString = localStorage.getItem('ticketapp_user');
-            console.log("Stored user string:", storedUserString);
-
-            if (!storedUserString) {
-                // No user has ever signed up
-                Toastify({ text: "No account found. Please sign up.", duration: 3000, gravity: "bottom", position: "right", style: { background: "linear-gradient(to right, #ff5f6d, #ffc371)" }}).showToast();
-                passwordError.textContent = 'No account found.';
-                return;
-            }
-
-            let storedUser;
-            try {
-                storedUser = JSON.parse(storedUserString);
-                console.log("Parsed stored user:", storedUser);
-            } catch (e) {
-                console.error("Error parsing stored user data:", e);
-                Toastify({ text: "Error reading user data. Please try clearing site data.", duration: 3000, gravity: "bottom", position: "right", style: { background: "linear-gradient(to right, #ff5f6d, #ffc371)" }}).showToast();
-                return;
-            }
-
-            // 4. Compare credentials
-            if (storedUser.email === email && storedUser.password === password) {
-                // 5. Credentials Match: Create session & redirect
-                console.log("Credentials match!");
-                const mockToken = `mock-token-${Date.now()}`;
-                localStorage.setItem('ticketapp_session', mockToken);
-                console.log("Session token set:", mockToken);
-
-                // Show success toast
-                Toastify({ text: "Login Successful! Redirecting...", duration: 2000, gravity: "bottom", position: "right", style: { background: "linear-gradient(to right, #00b09b, #96c93d)" }}).showToast();
-
-                // Redirect after a short delay to allow toast to show
-                setTimeout(() => {
-                    window.location.href = '/dashboard'; // Redirect to dashboard
-                }, 1500);
-
-            } else {
-                // 6. Credentials Mismatch: Show error
-                console.log("Credentials do not match.");
-                Toastify({ text: "Invalid email or password.", duration: 3000, gravity: "bottom", position: "right", style: { background: "linear-gradient(to right, #ff5f6d, #ffc371)" }}).showToast();
-                // Optionally show inline error (less specific is often better for security)
-                passwordError.textContent = 'Invalid email or password.';
-            }
-        });
-    });
-</script>
-{% endblock %} #}

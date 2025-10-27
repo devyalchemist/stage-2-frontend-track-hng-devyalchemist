@@ -87,36 +87,31 @@
 </template>
 
 <script setup>
-// 1. Import all our tools
 import { useRouter, RouterLink } from "vue-router";
 import { useAuthStore } from "@/stores/authStore";
 import { useToast } from "vue-toastification";
 import { Form, Field, ErrorMessage } from "vee-validate";
 import AppContainer from "@/components/AppContainer.vue";
 
-// 2. Initialize our tools
 const router = useRouter();
 const authStore = useAuthStore();
 const toast = useToast();
 
-// 3. The 'onSubmit' function. It automatically receives the 'data'
 function onSubmit(data) {
 	const loginSuccess = authStore.login(data);
 
 	if (loginSuccess) {
 		toast.success("Login successful! Redirecting...");
-		router.push("/dashboard"); // Navigate on success
+		router.push("/dashboard"); 
 	} else {
 		toast.error("Invalid email or password.");
 	}
 }
 
-// 4. Back button function
 function goBack() {
-	router.go(-1); // Navigates one step back in history
+	router.go(-1); 
 }
 
-// 5. Validation rules for vee-validate
 function validateEmail(value) {
 	if (!value) return "Email is required";
 	if (!/^\S+@\S+$/i.test(value)) return "Invalid email address";

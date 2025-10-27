@@ -7,22 +7,14 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
     <title>{{ pageTitle|default('Chekaa App') }}</title>
 </head>
-{# Use flex-col and min-h-screen for sticky footer #}
 <body class="bg-gray-100 flex flex-col min-h-screen">
 
-    {# **** THE WRAPPER DIV **** #}
-    {# max-w-[1440px] centers content and sets max width #}
-    {# mx-auto handles the centering #}
-    {# flex-grow allows this section to fill vertical space #}
-    {# w-full ensures it takes full width up to the max #}
     <div class="w-full max-w-[1440px] mx-auto flex-grow">
-        {# Page-specific content goes inside the wrapper #}
         {% block content %}{% endblock %}
     {% include 'partials/footer.twig' %}
     </div>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 
-    {# Footer remains outside the wrapper for full-width background #}
 {% block scripts %}
     {% endblock %}
 </body>

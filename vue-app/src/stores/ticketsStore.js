@@ -6,18 +6,14 @@ const DB_KEY = "ticketapp_tickets";
 
 function getTickets() {
 	const dbString = localStorage.getItem(DB_KEY);
-	// console.log(`Reading ${DB_KEY}:`, dbString); // Keep for debugging if needed
 	if (!dbString) {
-		// console.log(`${DB_KEY} not found in localStorage.`);
 		return null;
 	}
 	try {
 		const parsed = JSON.parse(dbString);
 		if (Array.isArray(parsed)) {
-			// console.log("Parsed tickets from localStorage:", parsed);
 			return parsed;
 		} else {
-			// console.warn(`${DB_KEY} data is not an array. Returning empty array.`);
 			return [];
 		}
 	} catch (e) {
@@ -35,7 +31,6 @@ function saveTickets(data) {
 		return;
 	}
 	try {
-		// console.log(`Saving to ${DB_KEY}:`, data);
 		localStorage.setItem(DB_KEY, JSON.stringify(data));
 	} catch (e) {
 		console.error(`Error saving ${DB_KEY}:`, e);

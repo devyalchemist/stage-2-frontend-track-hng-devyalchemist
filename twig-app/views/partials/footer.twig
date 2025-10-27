@@ -1,0 +1,11 @@
+{# views/partials/footer.twig #}
+<footer class="w-full bg-checkerr-green text-gray-400"> {# Use custom color #}
+    <div class="max-w-[1440px] mx-auto py-6 px-4 sm:px-6 lg:px-8">
+        <div class="text-center">
+            {# Get current year dynamically using Twig's 'now' filter #}
+            <p class="text-sm">
+                &copy; {{ "now"|date("Y") }} Chekaa. All rights reserved.
+            </p>
+        </div>
+    </div>
+</footer>

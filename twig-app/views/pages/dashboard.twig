@@ -1,0 +1,41 @@
+{# views/pages/dashboard.twig #}
+{% extends "layouts/app_layout.twig" %} {# Use the App Layout #}
+
+{# Content goes into the 'app_content' block defined in the layout #}
+{% block app_content %}
+    <div class="space-y-8"> {# Removed p-6/p-8, layout adds padding #}
+        {# Page Header - Welcome message is now handled by appLayout.js #}
+        <div class="flex justify-between items-center">
+            <div>
+                 {# Re-add h1 if needed, or rely on header #}
+                 <h1 id="page-title-placeholder" class="sm:text-3xl text-[1.2rem] font-bold text-checkerr-green">Dashboard</h1>
+                 <p class="mt-1 text-gray-600">Here's a summary of your tickets.</p>
+            </div>
+             {# Link moved to Header/Sidebar, but can keep Create here if desired #}
+             <a href="/tickets" {# Link to tickets page #}
+               class="px-5 py-2 font-medium text-white bg-checkerr-orange rounded-lg shadow-md hover:bg-opacity-80 transition-colors">
+                <span class="sm:inline hidden">Manage Tickets</span>
+                <span class="sm:hidden inline">+</span> {# Simple Icon #}
+            </a>
+        </div>
+
+        {# Stat cards container - JS will add cards here #}
+        <div id="stat-cards" class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            <p class="text-gray-500 italic">Loading stats...</p>
+        </div>
+
+        {# Bar chart container #}
+        <div id="status-breakdown" class="p-6 bg-white rounded-lg shadow">
+             <h2 class="text-xl font-semibold text-checkerr-green mb-4">Status Breakdown</h2>
+             <div class="flex items-end h-40 space-x-4">
+                 <p class="text-gray-500 italic">Loading chart...</p>
+             </div>
+        </div>
+        {# Removed Logout button, handled by Header #}
+    </div>
+{% endblock %}
+
+{# Specific scripts for the dashboard page #}
+{% block app_scripts %}
+    <script src="/js/dashboard.js"></script> {# dashboard.js populates stats #}
+{% endblock %}

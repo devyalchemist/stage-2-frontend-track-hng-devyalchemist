@@ -1,0 +1,10 @@
+{# views/pages/home.twig #}
+{% extends "layouts/main.twig" %} {# Tell Twig to use the main layout #}
+
+{% block content %}
+    {# Include the Hero partial #}
+    {% include 'partials/hero.twig' %}
+
+    {# Include the AboutApp partial #}
+    {% include 'partials/about_app.twig' %}
+{% endblock %}

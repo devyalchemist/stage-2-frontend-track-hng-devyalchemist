@@ -26,16 +26,19 @@ const routes = [
 		path: "/",
 		name: "home",
 		component: HomeView,
+		meta: { title: "Checkerr - Seamless Ticket Management" },
 	},
 	{
 		path: "/auth/login",
 		name: "login",
 		component: LoginView,
+		meta: { title: "Checkerr - Sign In" },
 	},
 	{
 		path: "/auth/signup",
 		name: "signup",
 		component: SignupView,
+		meta: { title: "Checkerr - Create Account" },
 	},
 
 	// --- 2. PROTECTED ROUTES ---
@@ -50,11 +53,13 @@ const routes = [
 				path: "/dashboard", // The full path
 				name: "dashboard",
 				component: () => import("../views/DashboardView.vue"),
+				meta: { title: "Checkerr - Dashboard" },
 			},
 			{
 				path: "/tickets", // The full path
 				name: "tickets",
 				component: () => import("../views/TicketsView.vue"),
+				meta: { title: "Checkerr - Manage Tickets" },
 			},
 		],
 	},
